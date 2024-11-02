@@ -20,7 +20,7 @@ public:
     void Ve(){
         for (int i = 0; i < DoDai; i++){
             gotoxy(A[i].x,A[i].y);
-            cout<<"X";
+            cout<<"O";
         }
     }
     void DiChuyen(int Huong){
@@ -46,7 +46,7 @@ int main()
             if (t=='a') Huong = 2;
             if (t=='w') Huong = 3;
             if (t=='d') Huong = 0;
-            if (t=='x') Huong = 1;
+            if (t=='s') Huong = 1;
         }
         system("cls");
         r.Ve();
