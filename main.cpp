@@ -1,7 +1,8 @@
 #include <iostream>
-#include <windows.h>
-#include <cstdlib>
+#include <ctime>
 #include <conio.h>
+#include <windows.h>
+#include "myLibary.h"
 using namespace std;
 void gotoxy( int column, int line );
 
