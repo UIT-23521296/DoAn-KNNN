@@ -4,6 +4,7 @@
 #include <conio.h>
 using namespace std;
 void gotoxy( int column, int line );
+
 struct Point{
     int x,y;
 };
