@@ -5,7 +5,6 @@
 #include "myLibrary.h"
 using namespace std;
 void gotoxy( int column, int line );
-
 struct Point{
     int x,y;
 };
@@ -34,6 +33,7 @@ public:
         if (Huong==3) A[0].y = A[0].y - 1;
 
     }
+    void drawWall();
 };
 
 int main()
@@ -42,31 +42,79 @@ int main()
     int Huong = 0;
     char t;
 
-    while (1){
-        if (kbhit()){
-            t = getch();
-            if (t=='a') Huong = 2;
-            if (t=='w') Huong = 3;
-            if (t=='d') Huong = 0;
-            if (t=='s') Huong = 1;
-        }
-        system("cls");
-        r.Ve();
-        r.DiChuyen(Huong);
-        Sleep(300);
-    }
+    //Ẩn nháy chuột
+    hideCursor();
+
+    //Vẽ tường
+    r.drawWall();
+    
+    // while (1){
+    //     if (kbhit()){
+    //         t = getch();
+    //         if (t=='a') Huong = 2;
+    //         if (t=='w') Huong = 3;
+    //         if (t=='d') Huong = 0;
+    //         if (t=='s') Huong = 1;
+    //     }
+    //     system("cls");
+    //     r.Ve();
+    //     r.DiChuyen(Huong);
+    //     Sleep(300);
+    // }
 
     return 0;
 }
 
+//Vẽ tường
+void CONRAN::drawWall()
+{
+    SetColor(12);
+    int x = 10, y = 1;
+
+    //Tường trên
+    while (x <= 100)
+    {
+        gotoxy(x, y);
+        cout << "=";
+        x++;
+    }
+
+    //Tường dưới 
+    x = 10, y = 26;
+    while (x <= 100)
+    {
+        gotoxy(x, y);
+        cout << "=";
+        x++;
+    }
+
+    //Tường trái
+    x = 10, y = 2;
+    while (y <= 26)
+    {
+        gotoxy(x, y);
+        cout << "=";
+        y++;
+    }
+
+    //Tường phải 
+    x = 100, y = 2;
+    while (y <= 26)
+    {
+        gotoxy(x, y);
+        cout << "=";
+        y++;
+    }
+    SetColor(7);
+}
 
 void gotoxy( int column, int line )
 {
-  COORD coord;
-  coord.X = column;
-  coord.Y = line;
-  SetConsoleCursorPosition(
-    GetStdHandle( STD_OUTPUT_HANDLE ),
-    coord
+    COORD coord;
+    coord.X = column;
+    coord.Y = line;
+    SetConsoleCursorPosition(
+        GetStdHandle( STD_OUTPUT_HANDLE ),
+        coord
     );
 }
