@@ -21,13 +21,13 @@ int whereY()
 	return -1;
 }
 //============== dịch con trỏ hiện tại đến điểm có tọa độ (x,y) ==========
-void gotoXY(int x, int y)
-{
-	HANDLE hConsoleOutput;
-	COORD Cursor_an_Pos = { x, y };
-	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
-}
+// void gotoXY(int x, int y)
+// {
+// 	HANDLE hConsoleOutput;
+// 	COORD Cursor_an_Pos = { x, y };
+// 	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+// 	SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
+// }
 //============= đặt màu cho chữ =========
 void SetColor(WORD color)
 {
