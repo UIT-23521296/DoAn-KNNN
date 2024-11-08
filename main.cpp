@@ -22,6 +22,7 @@ void randomXY(int &x, int &y)
 class CONRAN{
 public:
     struct Point A[100];
+    struct Point B;
     int DoDai;
     CONRAN(){
         DoDai = 3;
@@ -43,6 +44,7 @@ public:
     void drawWall();
     void drawSnake();
     void clearSnake();
+    void drawFood();
 };
 
 int main()
@@ -55,6 +57,7 @@ int main()
     //Ẩn nháy chuột
     hideCursor();
 
+    r.drawFood();
     //Vẽ tường
     while(1)
     {
@@ -144,5 +147,30 @@ void CONRAN::drawSnake()
         gotoxy(A[i].x, A[i].y);
         cout << "0" ;
     }
+    SetColor(7);
+}
+//Vẽ Mồi
+void CONRAN::drawFood()
+{
+    SetColor(8);
+    while(1)
+    {
+        // tạo mồi ngẫu nhiên
+        randomXY(B.x, B.y);
+
+        // kiểm tra xem mồi có trùng với con rắn không
+        bool loop = false;
+        for (int i = 0; i < DoDai; i++)
+        {
+            if(A[i].x == B.x && A[i].y == B.y)
+            {
+                loop = true;
+                break;
+            }
+        }
+        if(!loop) break;
+    }
+    gotoxy(B.x, B.y);
+    cout << "@"; // in cục mồi
     SetColor(7);
 }
