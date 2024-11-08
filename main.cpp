@@ -67,10 +67,10 @@ int main()
 
         if (kbhit()){
              t = getch();
-             if (t=='a') Huong = 2;
-             if (t=='w') Huong = 3;
-             if (t=='d') Huong = 0;
-             if (t=='s') Huong = 1;
+             if (t=='a' && Huong != 0) Huong = 2; // Không cho phép quay ngược lại sang phải
+             if (t=='w' && Huong != 1) Huong = 3; // Không cho phép quay ngược lại xuống dưới
+             if (t=='d' && Huong != 2) Huong = 0; // Không cho phép quay ngược lại sang trái
+             if (t=='s' && Huong != 3) Huong = 1; // Không cho phép quay ngược lại lên trên
          }
          r.drawSnake();
         Sleep(300); // Tốc độ di chuyển
