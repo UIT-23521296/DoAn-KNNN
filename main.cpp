@@ -3,27 +3,34 @@
 #include <conio.h>
 #include <windows.h>
 #include "myLibrary.h"
+#include <random>
 using namespace std;
 void gotoxy( int column, int line );
 struct Point{
     int x,y;
 };
+void randomXY(int &x, int &y)
+{
+    int minX = 11;
+    int maxX = 99;
+    x = minX + rand() % (maxX - minX + 1);
+    int minY = 2;
+    int maxY = 25;
+    y = minY + rand() % (maxY - minY + 1);
+
+}
 class CONRAN{
 public:
     struct Point A[100];
     int DoDai;
     CONRAN(){
         DoDai = 3;
-        A[0].x = 10; A[0].y = 10;
-        A[1].x = 11; A[1].y = 10;
-        A[2].x = 12; A[2].y = 10;
+        randomXY(A[0].x, A[0].y);
+        if(A[0].x == 11) A[0].x += 3; // nếu đầu rắn sát tường thì lùi thêm 3 ô
+        A[1].x= A[0].x + 1; A[1].y = A[0].y;
+        A[2].x= A[0].x + 2; A[2].y = A[0].y;
     }
-    void Ve(){
-        for (int i = 0; i < DoDai; i++){
-            gotoxy(A[i].x,A[i].y);
-            cout<<"O";
-        }
-    }
+
     void DiChuyen(int Huong){
         for (int i = DoDai-1; i>0;i--)
             A[i] = A[i-1];
@@ -34,10 +41,13 @@ public:
 
     }
     void drawWall();
+    void drawSnake();
+    void clearSnake();
 };
 
 int main()
 {
+    srand(time(0));
     CONRAN r;
     int Huong = 0;
     char t;
@@ -46,22 +56,22 @@ int main()
     hideCursor();
 
     //Vẽ tường
-    r.drawWall();
-    
-    // while (1){
-    //     if (kbhit()){
-    //         t = getch();
-    //         if (t=='a') Huong = 2;
-    //         if (t=='w') Huong = 3;
-    //         if (t=='d') Huong = 0;
-    //         if (t=='s') Huong = 1;
-    //     }
-    //     system("cls");
-    //     r.Ve();
-    //     r.DiChuyen(Huong);
-    //     Sleep(300);
-    // }
+    while(1)
+    {
+        r.clearSnake(); // Xóa rắn cũ
+        r.DiChuyen(Huong); // Di chuyển rắn
+        r.drawWall();
 
+        if (kbhit()){
+             t = getch();
+             if (t=='a') Huong = 2;
+             if (t=='w') Huong = 3;
+             if (t=='d') Huong = 0;
+             if (t=='s') Huong = 1;
+         }
+         r.drawSnake();
+        Sleep(300); // Tốc độ di chuyển
+    }
     return 0;
 }
 
@@ -79,7 +89,7 @@ void CONRAN::drawWall()
         x++;
     }
 
-    //Tường dưới 
+    //Tường dưới
     x = 10, y = 26;
     while (x <= 100)
     {
@@ -97,7 +107,7 @@ void CONRAN::drawWall()
         y++;
     }
 
-    //Tường phải 
+    //Tường phải
     x = 100, y = 2;
     while (y <= 26)
     {
@@ -117,4 +127,22 @@ void gotoxy( int column, int line )
         GetStdHandle( STD_OUTPUT_HANDLE ),
         coord
     );
+}
+// Xóa rắn
+void CONRAN::clearSnake() {
+    for (int i = 0; i < DoDai; i++) {
+        gotoxy(A[i].x, A[i].y);
+        cout << " "; // In khoảng trắng để xóa rắn cũ
+    }
+}
+
+//Vẽ Rắn
+void CONRAN::drawSnake()
+{
+    SetColor(10);
+    for (int i = 0; i < DoDai; i++){
+        gotoxy(A[i].x, A[i].y);
+        cout << "0" ;
+    }
+    SetColor(7);
 }
