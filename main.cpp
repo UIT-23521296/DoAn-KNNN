@@ -28,10 +28,13 @@ public:
     int DoDai;
     CONRAN() {
         DoDai = 3;
-        // Đặt vị trí bắt đầu cố định cho rắn
-        A[0].x = 50; A[0].y = 13;
-        A[1].x = A[0].x - 1; A[1].y = A[0].y;
-        A[2].x = A[0].x - 2; A[2].y = A[0].y;
+        randomXY(A[0].x, A[0].y);
+        if (A[0].x < 13) A[0].x = 13; // Đảm bảo cách xa tường trái
+        if (A[0].x > 97) A[0].x = 97; // Đảm bảo cách xa tường phải
+        if (A[0].y < 3) A[0].y = 3;   // Đảm bảo cách xa tường trên
+        if (A[0].y > 24) A[0].y = 24; // Đảm bảo cách xa tường dưới
+        A[1].x= A[0].x + 1; A[1].y = A[0].y;
+        A[2].x= A[0].x + 2; A[2].y = A[0].y;
         B.x = 0; // Khởi tạo B
         B.y = 0; // Khởi tạo B
     }
@@ -53,15 +56,87 @@ public:
     bool eatFood();
 };
 
+int selectSpeed(int &speed) {
+    int choice = 0;
+
+    while (true) {
+        system("cls");  // Xóa màn hình
+        cout << "==============================" << endl;
+        cout << "      CHOOSE SPEED           " << endl;
+        cout << "==============================" << endl;
+        cout << "1. Slow (500 ms)" << endl;
+        cout << "2. Medium (200 ms)" << endl;
+        cout << "3. Fast (100 ms)" << endl;
+        cout << "4. Back to Menu" << endl;
+        cout << "==============================" << endl;
+        cout << "Select a speed (1-4): ";
+        cin >> choice;
+
+        if (choice == 1) {
+            speed = 500;  // Tốc độ chậm
+            break;
+        } else if (choice == 2) {
+            speed = 200;  // Tốc độ vừa
+            break;
+        } else if (choice == 3) {
+            speed = 100;  // Tốc độ nhanh
+            break;
+        } else if (choice == 4) {
+            break;  // Quay lại menu chính
+        } else {
+            cout << "Invalid choice, please select again." << endl;
+        }
+    }
+}
+
+void displayMenu(int &speed) {
+    int choice = 0;
+
+    while (true) {
+        system("cls");  // Xóa màn hình
+
+        // Hiển thị menu
+        cout << "==============================" << endl;
+        cout << "      MENU CHINH GAME        " << endl;
+        cout << "==============================" << endl;
+        cout << "1. Start Game" << endl;
+        cout << "2. Choose Speed (Current speed: " << speed << " ms)" << endl;
+        cout << "3. Exit" << endl;
+        cout << "==============================" << endl;
+        cout << "Select an option (1-3): ";
+        cin >> choice;
+
+        if (choice == 1) {
+            // Bắt đầu trò chơi với tốc độ hiện tại
+            break;
+        } else if (choice == 2) {
+            selectSpeed(speed);  // Chọn tốc độ
+        } else if (choice == 3) {
+            exit(0);  // Thoát game
+        } else {
+            cout << "Invalid choice, please select again." << endl;
+        }
+    }
+}
+
+
+
+
 int main()
 {
     srand(static_cast<unsigned int>(time(0)));
     CONRAN r;
     int Huong = 0;
     char t;
+    int selectedOption = 0;
+    int speed = 200;
 
     //Ẩn nháy chuột
     hideCursor();
+    //Chọn tốc độ rắn
+    displayMenu(speed);
+    system("cls");
+
 
     r.drawFood();
     //Vẽ tường
@@ -94,7 +169,7 @@ int main()
         gotoxy(0, 0);
         cout << "Diem hien tai: " << r.userPoint + (r.DoDai - 3)*10;
         r.drawSnake();
-        Sleep(200); // Tốc độ di chuyển
+        Sleep(speed); // Tốc độ di chuyển
     }
 
     return 0;
@@ -200,11 +275,11 @@ void CONRAN::drawFood()
 // Kiểm tra va chạm
 bool CONRAN::checkCollision() {
     // Kiểm tra va chạm với tường
-    if (A[0].x <= 10 || A[0].x >= 100 || A[0].y <= 1 || A[0].y >= 26) {
+    if (A[0].x < 11 || A[0].x > 99 || A[0].y < 2 || A[0].y > 25) {
         return true;
     }
     // Kiểm tra va chạm với chính nó
-    for (int i = 1; i < DoDai; i++) {
+    for (int i = 3; i < DoDai; i++) {
         if (A[0].x == A[i].x && A[0].y == A[i].y) {
             return true;
         }
