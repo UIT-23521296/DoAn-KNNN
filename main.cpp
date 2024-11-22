@@ -3,10 +3,11 @@
 #include <fstream>
 #include <conio.h>
 #include <windows.h>
-#include "myLibrary.h"
+#include <sstream>
 #include <random>
 #include <vector>
 #include <algorithm>
+#include "myLibrary.h"
 using namespace std;
 
 void gotoxy(int column, int line);
@@ -127,34 +128,38 @@ void displayMenu(int &speed) {
 void saveScore(const string& username, int point) {
     vector<pair<string, int>> players;
 
-    // Đọc các điểm số hiện có từ file
+    // Đọc dữ liệu từ file
     ifstream inFile("highscore.txt");
     if (inFile.is_open()) {
-        string name;
-        int score;
-        while (inFile >> name >> score) {
-            players.push_back(make_pair(name, score));
+        string line;
+        while (getline(inFile, line)) {
+            istringstream iss(line);
+            string name;
+            int score;
+
+            // Đọc tên bọc trong dấu ngoặc kép
+            if (getline(iss, name, '"') && getline(iss, name, '"') && iss >> score) {
+                players.push_back(make_pair(name, score));
+            }
         }
         inFile.close();
     }
 
-    // Thêm điểm của người chơi mới vào danh sách
+    // Thêm điểm mới
     players.push_back(make_pair(username, point));
 
-    // Sắp xếp lại danh sách người chơi theo điểm (theo thứ tự giảm dần)
+    // Sắp xếp danh sách theo điểm giảm dần
     sort(players.begin(), players.end(), [](const pair<string, int>& a, const pair<string, int>& b) {
-        return a.second > b.second;  // So sánh điểm của 2 người chơi (từ cao xuống thấp)
+        return a.second > b.second;
     });
 
-    // Ghi lại danh sách đã sắp xếp vào file
-    ofstream outFile("highscore.txt", ios::trunc); // Mở file và ghi đè (clear file)
+    // Ghi lại danh sách vào file
+    ofstream outFile("highscore.txt", ios::trunc);
     if (outFile.is_open()) {
         for (const auto& player : players) {
-            outFile << player.first << " " << player.second << endl;
+            outFile << "\"" << player.first << "\" " << player.second << endl;
         }
         outFile.close();
-    } else {
-        cout << "Could not open file for saving scores!" << endl;
     }
 }
 
@@ -192,14 +197,14 @@ void continueGame(int &userPoint, bool &newGame) {
         cin >> option;
 
         if (option == 1) {
-            //Lưu điểm
-            // system("cls");
-            // cout << "Enter player's name: ";
-            // string userName;
-            // getline(cin, userName);
-            // saveScore(userName, userPoint);
+            // Lưu điểm
+            cout << "Enter player's name: ";
+            cin.ignore();
+            string userName;
+            getline(cin, userName);
+            saveScore(userName, userPoint);
             cout << "Press any key to return to the main menu.";
-            system("cls");
+            getch();
             newGame = true;
             break;
         } else if (option == 2) {
@@ -216,7 +221,6 @@ void continueGame(int &userPoint, bool &newGame) {
             exit(0);
         } else {
             cout << "Invalid option. Please try again." << endl;
-            _getch();
         }
         }
     }
