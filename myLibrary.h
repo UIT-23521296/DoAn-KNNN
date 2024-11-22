@@ -1,7 +1,7 @@
 #pragma once // tránh đụng độ thư viện khi gọi chồng file lên nhau
 #include <stdio.h>
 #include <conio.h>
-#include<ctime> /* thư viện hỗ trợ về thời gian thực */
+#include <ctime> /* thư viện hỗ trợ về thời gian thực */
 #include "windows.h" 
 //======= lấy tọa độ x của con trỏ hiện tại =============
 #define KEY_NONE	-1

@@ -1,7 +1,7 @@
 #pragma once
 #include "RandomXY.h"
 #include "myLibrary.h"
-#include "printPoint_saveScore.h"
+#include "printScore_saveScore.h"
 #include <iostream>
 
 using namespace std;
