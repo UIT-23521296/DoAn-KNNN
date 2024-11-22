@@ -2,7 +2,7 @@
 #include <iostream>
 #include "myLibrary.h"
 #include "RandomXY.h"
-#include "printPoint_saveScore.h"
+#include "printScore_saveScore.h"
 using namespace std;
 
 void selectSpeed(int &speed, string &sSpeed) {
@@ -66,7 +66,7 @@ void displayMenu(int &speed) {
             selectSpeed(speed, sSpeed);  // Chọn tốc độ
         }
         else if (choice == 3) {
-            printPoint();
+            printScore();
         }
         else if (choice == 4) {
             system("cls");

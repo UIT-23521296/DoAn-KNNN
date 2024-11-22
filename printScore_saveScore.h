@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void printPoint()
+void printScore()
 {
     vector<pair<string, int>> players;
     ifstream inputFile("highscore.txt");

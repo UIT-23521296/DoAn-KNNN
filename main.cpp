@@ -1,7 +1,7 @@
 #include "myLibrary.h"
 #include "CONRAN.h"
 #include "menu.h"
-#include "printPoint_saveScore.h"
+#include "printScore_saveScore.h"
 #include "gameOver.h"
 using namespace std;
 
