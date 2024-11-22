@@ -7,6 +7,7 @@
 #include <random>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 #include "myLibrary.h"
 using namespace std;
 
@@ -91,6 +92,44 @@ int selectSpeed(int &speed) {
     }
 }
 
+void printPoint()
+{
+    vector<pair<string, int>> players;
+    ifstream inputFile("highscore.txt");
+    if (inputFile.is_open())
+    {
+        string line;
+        while (getline(inputFile, line))
+        {
+            istringstream iss(line);
+            string name;
+            int point;
+
+            if (getline(iss, name, '"') && getline(iss, name, '"') && iss >> point)
+            {
+                players.push_back(make_pair(name, point));
+            }
+        }
+    }
+
+    system("cls");  
+    cout << "==============================" << endl;
+    cout << "        HIGH SCORES          " << endl;
+    cout << "==============================" << endl;
+    cout << left << setw(5) << "Rank" << setw(20) << "Player Name" << setw(10) << "Score" << endl;
+    int i = 1;
+    for (const auto &player : players)
+    {
+        cout << left << setw(5) << i++
+             << setw(20) << player.first 
+             << setw(10) << player.second 
+             << endl;
+    }
+    cout << "==============================" << endl;
+    cout << "Press any key to return to the menu.";
+    _getch();  
+}
+
 void displayMenu(int &speed) {
     int choice = 0;
 
@@ -103,7 +142,8 @@ void displayMenu(int &speed) {
         cout << "==============================" << endl;
         cout << "1. Start Game" << endl;
         cout << "2. Choose Speed (Current speed: " << speed << " ms)" << endl;
-        cout << "3. Exit" << endl;
+        cout << "3. Print point" << endl;
+        cout << "4. Exit" << endl;
         cout << "==============================" << endl;
         cout << "Select an option (1-3): ";
         cin >> choice;
@@ -113,7 +153,11 @@ void displayMenu(int &speed) {
             break;
         } else if (choice == 2) {
             selectSpeed(speed);  // Chọn tốc độ
-        } else if (choice == 3) {
+        }
+        else if (choice == 3) {
+            printPoint();
+        }
+        else if (choice == 4) {
             system("cls");
             gotoxy(55, 13);
             cout << "Good bye!";
