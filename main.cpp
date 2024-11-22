@@ -62,9 +62,9 @@ int selectSpeed(int &speed) {
         cout << "==============================" << endl;
         cout << "      CHOOSE SPEED           " << endl;
         cout << "==============================" << endl;
-        cout << "1. Slow (500 ms)" << endl;
-        cout << "2. Medium (200 ms)" << endl;
-        cout << "3. Fast (100 ms)" << endl;
+        cout << "1. Slow" << endl;
+        cout << "2. Medium" << endl;
+        cout << "3. Fast" << endl;
         cout << "4. Back to Menu" << endl;
         cout << "==============================" << endl;
         cout << "Select a speed (1-4): ";
@@ -110,14 +110,74 @@ void displayMenu(int &speed) {
         } else if (choice == 2) {
             selectSpeed(speed);  // Chọn tốc độ
         } else if (choice == 3) {
-            exit(0);  // Thoát game
+            system("cls");
+            gotoxy(55, 13);
+            cout << "Good bye!";
+            getch();
+            exit(0); // Thoát game
         } else {
             cout << "Invalid choice, please select again." << endl;
         }
     }
 }
 
+void continueGame(int &userPoint, bool &newGame) {
+    newGame = false;
+    system("cls");
+    gotoxy(50, 13);
+    cout << "Game Over!";
+    gotoxy(47, 14);
+    cout << "Diem cua ban la: " << userPoint;
+    gotoxy(30, 15);
+    cout << "Press any key to continue, or press 'Enter' to quit.";
+    char choice = _getch();
+    if (choice == 13)
+    {
+        system("cls");
+        gotoxy(55, 13);
+        cout << "Good bye!";
+        getch();
+        exit(0);
+    }
+    else
+    {
+        while (true) {
+        system("cls");
+        cout << "==============================" << endl;
+        cout << "      GAME OVER OPTIONS      " << endl;
+        cout << "==============================" << endl;
+        cout << "1. Save Score" << endl;
+        cout << "2. Start New Game" << endl;
+        cout << "3. Exit" << endl;
+        cout << "==============================" << endl;
+        cout << "Select an option (1-3): ";
+        int option;
+        cin >> option;
 
+        if (option == 1) {
+            //Lưu điểm
+            cout << "Press any key to return to the main menu.";
+            _getch(); 
+            break;
+        } else if (option == 2) {
+            // Start New Game
+            system("cls");
+            newGame = true;
+            break;
+        } else if (option == 3) {
+            // Thoát game
+            system("cls");
+            gotoxy(55, 13);
+            cout << "Good bye!";
+            getch();
+            exit(0);
+        } else {
+            cout << "Invalid option. Please try again." << endl;
+            _getch();
+        }
+        }
+    }
+}
 
 
 int main()
@@ -134,7 +194,6 @@ int main()
     //Chọn tốc độ rắn
     displayMenu(speed);
     system("cls");
-
 
     r.drawFood();
     //Vẽ tường
@@ -156,13 +215,11 @@ int main()
             r.drawFood();
         }
         if (r.checkCollision()) {
-            system("cls");
-            gotoxy(50, 13);
-            cout << "Game Over!";
-            gotoxy(47, 14);
-            cout << "Diem cua ban la: " << r.userPoint + (r.DoDai - 3)*10;
-            getch();
-            break;
+            int point = r.userPoint + (r.DoDai - 3)*10;
+            bool newGame;
+            continueGame(point, newGame);
+            if (newGame)
+                main();
         }
         gotoxy(0, 0);
         cout << "Diem hien tai: " << r.userPoint + (r.DoDai - 3)*10;
