@@ -145,7 +145,7 @@ void displayMenu(int &speed) {
         cout << "3. Print point" << endl;
         cout << "4. Exit" << endl;
         cout << "==============================" << endl;
-        cout << "Select an option (1-3): ";
+        cout << "Select an option (1-4): ";
         cin >> choice;
 
         if (choice == 1) {
