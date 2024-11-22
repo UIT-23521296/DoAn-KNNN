@@ -35,8 +35,6 @@ public:
         if (A[0].y > 24) A[0].y = 24; // Đảm bảo cách xa tường dưới
         A[1].x= A[0].x + 1; A[1].y = A[0].y;
         A[2].x= A[0].x + 2; A[2].y = A[0].y;
-        B.x = 0; // Khởi tạo B
-        B.y = 0; // Khởi tạo B
     }
 
     void DiChuyen(int Huong) {
@@ -149,9 +147,9 @@ int main()
         if (_kbhit()) {
             t = _getch();
             if (t=='a' && Huong != 0) Huong = 2; // Không cho phép quay ngược lại sang phải
-             if (t=='w' && Huong != 1) Huong = 3; // Không cho phép quay ngược lại xuống dưới
-             if (t=='d' && Huong != 2) Huong = 0; // Không cho phép quay ngược lại sang trái
-             if (t=='s' && Huong != 3) Huong = 1; // Không cho phép quay ngược lại lên trên
+            if (t=='w' && Huong != 1) Huong = 3; // Không cho phép quay ngược lại xuống dưới
+            if (t=='d' && Huong != 2) Huong = 0; // Không cho phép quay ngược lại sang trái
+            if (t=='s' && Huong != 3) Huong = 1; // Không cho phép quay ngược lại lên trên
         }
         if (r.eatFood()) {
             r.DoDai++;
