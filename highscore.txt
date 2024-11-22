@@ -1,0 +1,5 @@
+"Minh Quang" 50
+"Quang Vu" 30
+"Ngoc Toan" 10
+"Minh Chau" 0
+"Dinh Thinh" 0
