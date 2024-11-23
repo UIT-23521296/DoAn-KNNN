@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <conio.h>
 #include <ctime> /* thư viện hỗ trợ về thời gian thực */
+#include <Windows.h>
+#include <mmsystem.h>
+#include <thread>
+#include <chrono>
 #include "windows.h" 
 //======= lấy tọa độ x của con trỏ hiện tại =============
 #define KEY_NONE	-1
