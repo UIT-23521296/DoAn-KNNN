@@ -21,12 +21,11 @@ int main()
     system("cls");
 
     r.drawFood();
-    //Vẽ tường
     while (1)
     {
         r.clearSnake(); // Xóa rắn cũ
         r.DiChuyen(Huong); // Di chuyển rắn
-        r.drawWall();
+        r.drawWall(); //Vẽ tường
 
         if (_kbhit()) {
             t = _getch();
@@ -36,10 +35,13 @@ int main()
             if (t=='s' && Huong != 3) Huong = 1; // Không cho phép quay ngược lại lên trên
         }
         if (r.eatFood()) {
+            PlaySound(TEXT("eatFood.wav"), NULL, SND_FILENAME | SND_ASYNC);
             r.DoDai++;
             r.drawFood();
         }
         if (r.checkCollision()) {
+            PlaySound(TEXT("lose.wav"), NULL, SND_FILENAME | SND_ASYNC);
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             int point = r.userPoint + (r.DoDai - 3)*10;
             bool newGame;
             continueGame(point, newGame);
